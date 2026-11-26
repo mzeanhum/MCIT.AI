@@ -1,0 +1,61 @@
+.app-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: .25rem 1rem;
+    min-height: 4rem;
+    padding: .45rem var(--workspace-gutter);
+    border-bottom: 1px solid var(--workspace-border);
+    background: #f4f3ee;
+}
+
+.brand, .app-header nav ::deep a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--workspace-ink);
+    text-decoration: none;
+}
+
+.brand {
+    gap: .65rem;
+    font-size: 1.15rem;
+    font-weight: 750;
+    letter-spacing: -.045em;
+}
+
+.brand-mark {
+    display: grid;
+    width: 2rem;
+    height: 2rem;
+    place-items: center;
+    border-radius: .55rem;
+    background: var(--workspace-ink);
+    color: var(--workspace-accent);
+    font-size: .95rem;
+    font-weight: 800;
+}
+
+.app-header nav {
+    display: flex;
+    gap: .25rem;
+}
+
+.app-header nav ::deep a {
+    padding: .45rem .75rem;
+    border-radius: .6rem;
+    color: var(--workspace-muted);
+    font-size: .925rem;
+    font-weight: 650;
+}
+
+.app-header nav ::deep a:hover {
+    background: #eae8df;
+    color: var(--workspace-ink);
+}
+
+.app-header nav ::deep a.active {
+    background: #e8ebda;
+    color: #303b1e;
+}

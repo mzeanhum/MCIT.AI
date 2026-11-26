@@ -1,0 +1,13 @@
+@ApiService_HostAddress = http://localhost:5326
+
+GET {{ApiService_HostAddress}}/health
+
+###
+
+POST {{ApiService_HostAddress}}/api/chat/stream
+Content-Type: application/json
+Accept: text/event-stream
+
+{
+    "messages": [{ "role": "user", "content": "Give me one idea for a team workshop." }]
+}

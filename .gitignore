@@ -1,0 +1,30 @@
+# IDE state and per-user settings
+.vs/
+.idea/
+*.user
+*.suo
+*.rsuser
+*.userprefs
+
+# .NET build and test outputs
+[Bb]in/
+[Oo]bj/
+artifacts/
+TestResults/
+*.nupkg
+*.snupkg
+
+# Local configuration, credentials and diagnostics
+.env
+.env.*
+!.env.example
+appsettings.Local.json
+appsettings.*.Local.json
+secrets.json
+*.pfx
+*.p12
+*.pem
+*.key
+*.bak
+*.log
+*.tmp

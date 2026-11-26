@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="MCIT.AI.ApiService/MCIT.AI.ApiService.csproj" />
+  <Project Path="MCIT.AI.AppHost/MCIT.AI.AppHost.csproj" />
+  <Project Path="MCIT.AI.Application/MCIT.AI.Application.csproj" />
+  <Project Path="MCIT.AI.Infrastructure/MCIT.AI.Infrastructure.csproj" />
+  <Project Path="MCIT.AI.ServiceDefaults/MCIT.AI.ServiceDefaults.csproj" />
+  <Project Path="MCIT.AI.Web/MCIT.AI.Web.csproj" />
+</Solution>

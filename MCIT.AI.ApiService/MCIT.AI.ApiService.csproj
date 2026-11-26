@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <UserSecretsId>8861ab42-a039-4e90-9ab7-aca2db36a09f</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MCIT.AI.Infrastructure\MCIT.AI.Infrastructure.csproj" />
+    <ProjectReference Include="..\MCIT.AI.ServiceDefaults\MCIT.AI.ServiceDefaults.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+  </ItemGroup>
+
+</Project>

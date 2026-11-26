@@ -1,0 +1,27 @@
+@page "/Error"
+@using System.Diagnostics
+@using MCIT.AI.Web.Components.Layout
+
+<PageTitle>Something went wrong | MCIT.AI</PageTitle>
+
+<main class="content">
+    <WorkspaceHeading Title="Something went wrong" Description="Try again from the workspace." />
+    <p><a href="">Return to Home</a></p>
+
+    @if (ShowRequestId)
+    {
+        <p>Request ID <code>@requestId</code></p>
+    }
+</main>
+@code{
+    [CascadingParameter]
+    public HttpContext? HttpContext { get; set; }
+
+    private string? requestId;
+    private bool ShowRequestId => !string.IsNullOrEmpty(requestId);
+
+    protected override void OnInitialized()
+    {
+        requestId = Activity.Current?.Id ?? HttpContext?.TraceIdentifier;
+    }
+}

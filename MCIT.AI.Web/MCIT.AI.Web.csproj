@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <ItemGroup>
+    <ProjectReference Include="..\MCIT.AI.Application\MCIT.AI.Application.csproj" />
+    <ProjectReference Include="..\MCIT.AI.ServiceDefaults\MCIT.AI.ServiceDefaults.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Components\Pages\ChatBot\" />
+  </ItemGroup>
+
+</Project>

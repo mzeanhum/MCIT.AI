@@ -1,0 +1,139 @@
+@page "/chatbot"
+@rendermode InteractiveServer
+
+<PageTitle>Chatbot | MCIT.AI</PageTitle>
+
+<div class="chat-layout @(showHistory ? "history-open" : null)">
+    <button class="history-toggle new-chat" type="button" aria-expanded="@(showHistory ? "true" : "false")"
+            aria-controls="chat-history" @onclick="ToggleHistory">@(showHistory ? "Hide chats" : "Show chats")</button>
+    <aside id="chat-history" class="chat-sidebar" aria-labelledby="chat-history-heading">
+        <button class="new-chat" type="button" disabled="@(isSending || storageBusy || (messages.Count == 0 && input.Length == 0))"
+                @onclick="NewChat"><span aria-hidden="true">+</span> New chat</button>
+        <h2 id="chat-history-heading">Your chats</h2>
+        @if (history is { Count: > 0 })
+        {
+            <ul class="conversation-list">
+                @foreach (var item in history)
+                {
+                    <li @key="item.Id">
+                        <button class="conversation-open" type="button" dir="auto" title="@item.Title"
+                                aria-current="@(item.Id == conversationId ? "true" : null)"
+                                disabled="@(isSending || storageBusy)" @onclick="() => OpenConversationAsync(item.Id)">@item.Title</button>
+                        <button class="conversation-delete" type="button" disabled="@(isSending || storageBusy)"
+                                aria-label="@($"Delete conversation: {item.Title}")" @onclick="() => DeleteConversationAsync(item.Id)">×</button>
+                    </li>
+                }
+            </ul>
+        }
+        else if (history is not null)
+        {
+            <p class="history-state">No saved conversations yet.</p>
+        }
+        else if (storageBusy)
+        {
+            <p class="history-state" role="status">Loading chats…</p>
+        }
+        @if (!showMemory && storageError is not null)
+        {
+            <p class="history-state composer-error" role="alert">@storageError</p>
+            @if (history is null)
+            {
+                <button class="new-chat" type="button" disabled="@(owner is null || isSending || storageBusy)"
+                        @onclick="RefreshHistoryAsync">Retry</button>
+            }
+        }
+    </aside>
+
+    <main class="chat-workspace @(showMemory ? "storage-open" : null)">
+        <header class="chat-heading">
+            <h1>Chatbot</h1>
+            <button class="new-chat" type="button" aria-expanded="@(showMemory ? "true" : "false")"
+                    disabled="@(owner is null || isSending || storageBusy)" @onclick="ToggleMemoryAsync">Memory</button>
+        </header>
+
+        @if (showMemory)
+        {
+            <section class="chat-storage" aria-label="Saved memory">
+                <h2>Saved memory</h2>
+                <p>Add preferences you want the assistant to use in future replies.</p>
+                <form class="memory-form" @onsubmit="AddMemoryAsync" @onsubmit:preventDefault>
+                    <input aria-label="Memory note" placeholder="Add a preference…" maxlength="2000" @bind="memoryDraft" @bind:event="oninput" />
+                    <button type="submit" disabled="@(history is null || storageBusy || memory.Count >= 20 || string.IsNullOrWhiteSpace(memoryDraft))">Save note</button>
+                </form>
+                @if (memory.Count > 0)
+                {
+                    <ul>
+                        @foreach (var note in memory)
+                        {
+                            <li @key="note.Id">
+                                <span dir="auto">@note.Content</span>
+                                <button type="button" disabled="@storageBusy" aria-label="@($"Remove note: {note.Content}")"
+                                        @onclick="() => DeleteMemoryAsync(note.Id)">Remove</button>
+                            </li>
+                        }
+                    </ul>
+                }
+                @if (storageBusy)
+                {
+                    <p role="status">Updating saved memory…</p>
+                }
+                @if (storageError is not null)
+                {
+                    <p class="composer-error" role="alert">@storageError</p>
+                }
+            </section>
+        }
+
+        <div class="chat-panel">
+            <section class="chat-messages" aria-label="Conversation" tabindex="0">
+                @if (messages.Count == 0)
+                {
+                    <div class="chat-empty">
+                        <h2>What are you working on?</h2>
+                        <p>Start with a question, a rough idea, or something you want to write.</p>
+                    </div>
+                }
+                else
+                {
+                    <div class="message-list">
+                        @foreach (var message in messages)
+                        {
+                            <article class="message-row @(message.Role == "user" ? "from-user" : "from-assistant")"
+                                     aria-label="@(message.Role == "user" ? "You" : "Assistant")">
+                                <p class="message-text" dir="auto">@message.Content</p>
+                            </article>
+                        }
+                    </div>
+                }
+            </section>
+
+            <form class="composer" @onsubmit="SendAsync" @onsubmit:preventDefault>
+                <div class="message-input">
+                    <textarea readonly="@isSending" aria-label="Message" placeholder="Ask anything…" dir="auto"
+                              rows="2" @bind="input" @bind:event="oninput"></textarea>
+                    @if (isSending)
+                    {
+                        <button class="stop-button" type="button" disabled="@stopping" @onclick="StopResponseAsync">@(stopping ? "Stopping…" : "Stop")</button>
+                    }
+                    else
+                    {
+                        <button class="send-button" type="submit" disabled="@(owner is null || storageBusy || string.IsNullOrWhiteSpace(input))">Send <span aria-hidden="true">↑</span></button>
+                    }
+                </div>
+
+                @if (isSending)
+                {
+                    <p class="composer-status" role="status">Generating response…</p>
+                }
+                @if (notice is not null)
+                {
+                    <p class="composer-status" role="status">@notice</p>
+                }
+                @if (error is not null)
+                {
+                    <p class="composer-error" role="alert">@error</p>
+                }
+            </form>
+        </div>
+    </main>
+</div>

@@ -1,0 +1,14 @@
+<Project Sdk="Aspire.AppHost.Sdk/13.2.4">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+
+    <UserSecretsId>462065bb-f99b-4515-b51c-f217d5130cc2</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MCIT.AI.ApiService\MCIT.AI.ApiService.csproj" />
+    <ProjectReference Include="..\MCIT.AI.Web\MCIT.AI.Web.csproj" />
+  </ItemGroup>
+
+</Project>

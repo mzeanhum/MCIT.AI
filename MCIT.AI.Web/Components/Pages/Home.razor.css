@@ -1,0 +1,96 @@
+.home {
+    display: grid;
+    gap: clamp(2rem, 5vw, 3.5rem);
+    max-width: 74rem;
+    margin-inline: auto;
+}
+
+.hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    min-height: 22rem;
+    display: grid;
+    align-items: center;
+    padding: clamp(1.5rem, 6vw, 4.5rem);
+    border-radius: var(--workspace-radius);
+    background: #242620;
+    color: #fafaf2;
+}
+
+.hero-content { position: relative; z-index: 1; }
+
+.hero h1 {
+    margin: 0;
+    font: 700 clamp(2.6rem, 5.6vw, 5rem)/.97 var(--workspace-display);
+    letter-spacing: -.065em;
+}
+
+.hero p {
+    max-width: 25rem;
+    margin: 1.05rem 0 1.7rem;
+    color: #d3d6c9;
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    line-height: 1.55;
+}
+
+.hero-action {
+    display: inline-flex;
+    align-items: center;
+    gap: .85rem;
+    min-height: 46px;
+    padding: .55rem .9rem;
+    border-radius: .5rem;
+    background: var(--workspace-accent);
+    color: #252a16;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.hero-action:hover { background: #e4ffa5; color: #252a16; }
+.hero-action:focus-visible { outline-color: var(--workspace-accent); }
+
+.hero-orbit {
+    position: absolute;
+    right: clamp(-11rem, -10vw, -3rem);
+    bottom: -48%;
+    width: clamp(25rem, 49vw, 41rem);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    transform: rotate(-24deg) scaleX(.83);
+    background: repeating-radial-gradient(circle at center, transparent 0 15px, #d5f47355 16px 17px, transparent 18px 28px);
+    mask-image: linear-gradient(135deg, transparent 5%, #000 48%, transparent 94%);
+    pointer-events: none;
+}
+
+.home h2 { margin: 0 0 .8rem; font-size: 1.15rem; font-weight: 700; letter-spacing: -.025em; }
+
+.tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 18.5rem), 1fr));
+    gap: .85rem;
+}
+
+.tool {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 6.5rem;
+    padding: 1.1rem 1.25rem;
+    border: 1px solid var(--workspace-border);
+    border-radius: .8rem;
+    background: var(--workspace-surface);
+    color: var(--workspace-ink);
+    text-decoration: none;
+}
+
+.tool:hover { border-color: #7e8b5f; color: var(--workspace-ink); }
+.tool h3 { margin: 0 0 .25rem; font-size: 1.025rem; font-weight: 700; }
+.tool p { margin: 0; color: var(--workspace-muted); font-size: .925rem; }
+.tool span { font-size: 1.2rem; }
+
+@media (max-width: 480px) {
+    .hero { min-height: 21rem; }
+    .hero-orbit { right: -13rem; opacity: .55; }
+}
